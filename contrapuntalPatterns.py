@@ -25,14 +25,14 @@ def parseCPString():
     rstr = Rstr_max()
     f = []
     forfs = {3, -3, 10, -10}                    # Arithmetic values of fourths for separate treatment
-    for (dirpath, dirnames, filenames) in walk('/home/absum/ownCloud/cpdata/Outlines/Naples/'):
+    for (dirpath, dirnames, filenames) in walk('/Path/To/xmlFiles/'):
         f.extend(filenames)
         break
 
     for item in f:
         stringArray.insert(stringdex, item)
         stringdex += 1
-        dircty = '/home/absum/ownCloud/cpdata/Outlines/Naples/'
+        dircty = '/Path/To/xmlFiles/'
         dircty += item
         contrapair = converter.parse(dircty)
 
