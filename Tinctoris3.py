@@ -15,7 +15,7 @@
 
 
 # Unison = previous consonant interval, then dictionaries for cf steps -4, -3, -2, -1, 0, 1, 2, 3, 4
-# Each dictionary index = permitted contrapuntal motion in steps on the staff
+# Each list entry = permitted contrapuntal motion in steps on the staff
 
 unison = [
           {0, -2, 3, 1},        # Descending fifth in tenor
