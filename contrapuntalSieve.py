@@ -6,7 +6,7 @@ import Tinctoris3
 
 # Takes a musicXML file as input. Expects four voices.
 # Naples 6 works since only four voices active at a time.
-# Analyses the cantus-tenor hard-coded around line 590.
+# Analyses the cantus-tenor pair hard-coded around line 590.
 # Changing pair analysis requires placing a different part in the 'cantus' etc.
 
 # Returns a list of contrapuntal anomalies i.e. progressions inconsistent with the Liber
@@ -23,7 +23,7 @@ import Tinctoris3
 # with the closing consonance of one fragment providing the opening consonance of the next.
 
 # Weaknesses: segments cantus firmus without reference to partner voice
-# Does not account for changees in mensuration
+# Does not account for changes in mensuration
 # Fragile if presented with unexpected notation at times: e.g. consecutive semiminim rests in cf break it.
         
 class CPFragment(object):           # Object that holds each component segment of a passage
@@ -51,17 +51,18 @@ class CPFragment(object):           # Object that holds each component segment o
         self.consonance = -144 # Working/changeable version of prevConsonance. Set as impossible value to mark first use.
         self.notSet = []
         self.resultSet = []
-        
-    def analyseCRhythm(self, tStream, mStream): #add something to check for rests and segment accordingly.
+
+    def analyseCRhythm(self, tStream, mStream):  #
         indices = []
-        
+
         if len(tStream) > 1:
             if tStream[0].duration.quarterLength != 2:
-                return([1])
-            
-            elif tStream[1].duration.quarterLength == 2 and Tinctoris3.getInterval(tStream[1], tStream[0]) == Tinctoris3.getInterval(mStream[1], mStream[0]):
-                return([1])
-            
+                return ([1])
+
+            elif tStream[1].duration.quarterLength == 2 and Tinctoris3.getInterval(tStream[1], tStream[
+                0]) == Tinctoris3.getInterval(mStream[1], mStream[0]):
+                return ([1])
+
             else:
                 return([2,2,(tStream[-1].offset + tStream[-1].duration.quarterLength)])
         
@@ -71,17 +72,17 @@ class CPFragment(object):           # Object that holds each component segment o
         item = tStream.flat.notesAndRests[0]
         if item.isRest:
             return([1])
-        
-        if item.duration.quarterLength == 6:
-            if len(mStream)< 2:
-                return([1])
+
+        if item.duration.quarterLength == 6:  # Segments dotted semibreves. Consistent but dubious accuracy.
+            if len(mStream) < 2:
+                return ([1])
             elif mStream[0].duration.quarterLength == 2 and mStream[1].duration.quarterLength == 2:
-                return([3, 2, 4, (tStream[-1].offset + tStream[-1].duration.quarterLength)])
+                return ([3, 2, 4, (tStream[-1].offset + tStream[-1].duration.quarterLength)])
             elif mStream.duration.quarterLength > 2:
                 return ([2, 4, (tStream[-1].offset + tStream[-1].duration.quarterLength)])
 
             else:
-                return([2, 2, (tStream[-1].offset + tStream[-1].duration.quarterLength)])
+                return ([2, 2, (tStream[-1].offset + tStream[-1].duration.quarterLength)])
         
         if item.duration.quarterLength in {8,12}:
             indices.append(item.duration.quarterLength/4)
@@ -147,7 +148,7 @@ class CPFragment(object):           # Object that holds each component segment o
         return(rStream)
 
     def resolveBite(self, cf, cp, upper, lower, lFrame, rFrame): #takes four streams (upper/lower for fourth adjudication)
-        # Returns list (sorted?) of pitches as keys with weighting as favoured cp note
+        # Returns soreted list of pitches as keys with weighting as favoured cp note
         
         
         if cp.flat.notesAndRests[0].isRest:
@@ -256,7 +257,6 @@ class CPFragment(object):           # Object that holds each component segment o
     def resolveFragment(self):     #resolves contrapuntal movement in fragment, returns last resulting consonance & cf and contrapuntal notes
         result = []
 
-        # Should be two steps: analyse the fragment for number of cp notes, set cfOut accordingly.
         
         self.indices = self.analyseCRhythm(self.notelist, self.cpstream)
         # print(self.position/4 + 1)   # debugging
