@@ -9,12 +9,15 @@
 # There is a character set problem that prevents this script working on Windows.
 # This should be easily fixable, but I have simply stuck to Linux for pattern extraction.
 
+# rstr_max downloaded from https://code.google.com/archive/p/pysuffix/
+
 
 from music21 import *
 import suffixTables
 from rstr_max import *
 import sys
 from os import walk
+
 
 def parseCPString():
 
