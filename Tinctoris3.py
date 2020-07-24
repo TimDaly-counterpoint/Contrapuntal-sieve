@@ -410,16 +410,18 @@ voces ={"B1": -1,
 
 from music21 import *
 
+
 # Filter notes for possible contrapuntal continuation. Add available fourths to candidates
 # if supported by lower voices.
-def filterNotes(noteStream, compNote, cf, testSet, upper, lower): # add ability to read fourths
-    forfs = {2, 4} # required intervals between tenor and other voice to allow fourths
+# Returns a list of possible cp continuations, including consonant fourths.
+def filterNotes(noteStream, compNote, cf, testSet, upper, lower):
+    forfs = {2, 4}  # required intervals between tenor and other voice to allow fourths
     aList = []
-    
-    for subject in noteStream:     
+
+    for subject in noteStream:
         if not subject.isRest:
             x = getInterval(subject, compNote)
-            if len(subject.nameWithOctave) > 2: 
+            if len(subject.nameWithOctave) > 2:
                 subject.nameWithOctave = subject.nameWithOctave[0] + subject.nameWithOctave[-1]
         if subject.isRest:
             continue
