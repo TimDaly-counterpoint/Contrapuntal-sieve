@@ -3,7 +3,7 @@
 # values provided in Tinctoris De arte contrapuncti Book 1.
 
 # Build an x * y array where x = the present interval between two voices
-# and y = movement of cantus firms in +/- steps on the staff. Reading the
+# and y = possible movement of cantus firms in +/- steps on the staff. Reading the
 # table leads to a list of permitted contrapuntal steps in response.
 
 # Each matrix runs -4 to +4 steps in cantus firmus
