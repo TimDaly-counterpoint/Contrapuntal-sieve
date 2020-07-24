@@ -11,7 +11,7 @@
 
 
 from music21 import *
-import suffixtables
+import suffixTables
 from rstr_max import *
 import sys
 from os import walk
@@ -78,44 +78,45 @@ def parseCPString():
                 lindex += 1
                 continue
 
-            if suffixtables.getInterval(prevCounter, upper) == 0 and suffixtables.getInterval(prevFirmus, lower) == 0 and consonance != -1:
+            if suffixTables.getInterval(prevCounter, upper) == 0 and suffixTables.getInterval(prevFirmus,
+                                                                                              lower) == 0 and consonance != -1:
                 lindex += 1
                 continue
 
             elif consonance == -1:
-                consonance = suffixtables.getInterval(upper,lower)
+                consonance = suffixTables.getInterval(upper, lower)
                 if consonance not in forfs:
-                    char = suffixtables.konsonances[consonance]
+                    char = suffixTables.konsonances[consonance]
                     string += char
                     indices.append(locator/4)
                     prevCounter = upper
                     prevFirmus = lower
                 else:
-                    z = suffixtables.getInterval(upper,lower)
+                    z = suffixTables.getInterval(upper, lower)
                     if consonance == 3:
-                       char =  suffixtables.fourthUOut[z]
+                        char = suffixTables.fourthUOut[z]
                     elif consonance == -3:
-                        char = suffixtables.fourthLOut[z]
+                        char = suffixTables.fourthLOut[z]
                     elif consonance == 10:
-                        char = suffixtables.eleventhUOut[z]
+                        char = suffixTables.eleventhUOut[z]
                     elif consonance == -10:
-                        char = suffixtables.eleventhLOut[z]
+                        char = suffixTables.eleventhLOut[z]
 
             elif consonance in forfs:
-                z = suffixtables.getInterval(upper,lower)
+                z = suffixTables.getInterval(upper, lower)
                 if consonance == 3:
-                   char =  suffixtables.fourthUOut[z]
+                    char = suffixTables.fourthUOut[z]
                 elif consonance == -3:
-                    char = suffixtables.fourthLOut[z]
+                    char = suffixTables.fourthLOut[z]
                 elif consonance == 10:
-                    char = suffixtables.eleventhUOut[z]
+                    char = suffixTables.eleventhUOut[z]
                 elif consonance == -10:
-                    char = suffixtables.eleventhLOut[z]
+                    char = suffixTables.eleventhLOut[z]
 
                 consonance = z
             else:
 
-                x = suffixtables.getInterval(upper, prevCounter)
+                x = suffixTables.getInterval(upper, prevCounter)
 
                 if x > 4:
                     x = x % 7
@@ -126,7 +127,7 @@ def parseCPString():
                     if x < -4:
                         x += 7
 
-                y = suffixtables.getInterval(lower, prevFirmus)
+                y = suffixTables.getInterval(lower, prevFirmus)
                 if y > 4:
                     y = y % 7
                     if y > 4:
@@ -136,21 +137,21 @@ def parseCPString():
                     if y < -4:
                         y += 7
 
-                z = suffixtables.getInterval(upper, lower)
+                z = suffixTables.getInterval(upper, lower)
                 if z in forfs:
                     if z == 3:
-                        char = suffixtables.fourthUIn[consonance]
+                        char = suffixTables.fourthUIn[consonance]
                     elif z == -3:
-                        char = suffixtables.fourthLIn[consonance]
+                        char = suffixTables.fourthLIn[consonance]
                     elif z == 10:
-                        char = suffixtables.eleventhUIn[consonance]
+                        char = suffixTables.eleventhUIn[consonance]
                     elif z == -10:
-                        char = suffixtables.eleventhLIn[consonance]
+                        char = suffixTables.eleventhLIn[consonance]
                 else:
-                    interval = suffixtables.progressions[suffixtables.konsonanzen[consonance]]
+                    interval = suffixTables.progressions[suffixTables.konsonanzen[consonance]]
                     theSet = interval[y + 4]
                     if x not in theSet:
-                        char = suffixtables.illegals[z]
+                        char = suffixTables.illegals[z]
                     else:
                         char = theSet[x] #.encode('utf-8') used when trying to solve character encoding issues
 
@@ -194,7 +195,7 @@ def parseCPString():
             strung = ""
             for char in sss:                             # Map each character back to a progression
                 it = char.encode('utf-8')
-                strung += suffixtables.reverseCP[it]     # Windows breaks on character encoding here.
+                strung += suffixTables.reverseCP[it]  # Windows breaks on character encoding here.
                 strung += ';'
             print(strung)                         # Print reverse-mapped contrapuntal pattern.
 
